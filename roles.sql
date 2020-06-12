@@ -67,13 +67,36 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO ep_admin;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT all  ON SEQUENCES TO ep_admin;
 ——————————————————
 
+CREATE ROLE ag_admin;
+CREATE ROLE ag_readwrite;
+CREATE ROLE ag_read;
 
+GRANT ALL ON ALL TABLES IN SCHEMA ag_asset_ts to ag_admin;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA ag_asset_ts TO ag_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA ag_asset_ts GRANT ALL ON TABLES TO ag_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA ag_asset_ts GRANT all  ON SEQUENCES TO ag_admin;
+
+GRANT USAGE ON SCHEMA ag_asset_ts to ag_readwrite;
+GRANT all ON ALL TABLES IN SCHEMA ag_asset_ts to ag_readwrite;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA ag_asset_ts TO ag_readwrite;
+ALTER DEFAULT PRIVILEGES IN SCHEMA ag_asset_ts GRANT ALL ON TABLES TO ag_readwrite;
+ALTER DEFAULT PRIVILEGES IN SCHEMA ag_asset_ts GRANT USAGE, SELECT  ON SEQUENCES TO ag_readwrite;
+
+GRANT USAGE ON SCHEMA ag_asset_ts TO ag_read;
+GRANT SELECT ON ALL TABLES IN SCHEMA ag_asset_ts TO ag_read;
+ALTER DEFAULT PRIVILEGES IN SCHEMA ag_asset_ts GRANT SELECT ON TABLES TO ag_read;
+
+
+GRANT ag_read TO ag_read_user;
+GRANT ag_readwrite TO ag_readwrite_user;
+——————————————————
 CREATE ROLE readwrite;
 GRANT CONNECT ON DATABASE chargeworks TO readwrite;
 GRANT USAGE, CREATE ON SCHEMA cw_asset TO readwrite;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA cw_asset TO readwrite;
 ALTER DEFAULT PRIVILEGES IN SCHEMA cw_asset GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO readwrite;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA cw_asset TO readwrite;
+
 
 
 
