@@ -15,15 +15,24 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA ep_asset GRANT USAGE, SELECT  ON SEQUENCES TO
 
 GRANT ep_readwrite TO ep_readwrite_user;
 
+CREATE USER ep_hasura;
+GRANT ep_readwrite TO ep_hasura;
+
 GRANT USAGE ON SCHEMA ep_ts TO ep_read;
 GRANT SELECT ON ALL TABLES IN SCHEMA ep_ts TO ep_read;
 ALTER DEFAULT PRIVILEGES IN SCHEMA ep_ts GRANT SELECT ON TABLES TO ep_read;
+
+GRANT USAGE ON SCHEMA ep_eu_ts TO ep_read;
+GRANT SELECT ON ALL TABLES IN SCHEMA ep_eu_ts TO ep_read;
+ALTER DEFAULT PRIVILEGES IN SCHEMA ep_eu_ts GRANT SELECT ON TABLES TO ep_read;
 
 GRANT USAGE ON SCHEMA ep_asset TO ep_read;
 GRANT SELECT ON ALL TABLES IN SCHEMA ep_asset TO ep_read;
 ALTER DEFAULT PRIVILEGES IN SCHEMA ep_asset GRANT SELECT ON TABLES TO ep_read;
 
 GRANT ep_read TO ep_read_user;
+
+
 
 ——————————————————
 GRANT ALL on DATABASE postgres to ep_admin
