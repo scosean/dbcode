@@ -97,7 +97,17 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA ag_asset_ts GRANT SELECT ON TABLES TO ag_read
 
 
 GRANT ag_read TO ag_read_user;
+GRANT ag_read TO ep_read_user;
 GRANT ag_readwrite TO ag_readwrite_user;
+
+
+GRANT USAGE ON SCHEMA ag_asset_ts to ep_readwrite;
+GRANT all ON ALL TABLES IN SCHEMA ag_asset_ts to ep_readwrite;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA ag_asset_ts TO ep_readwrite;
+ALTER DEFAULT PRIVILEGES IN SCHEMA ag_asset_ts GRANT ALL ON TABLES TO ep_readwrite;
+ALTER DEFAULT PRIVILEGES IN SCHEMA ag_asset_ts GRANT USAGE, SELECT  ON SEQUENCES TO ep_readwrite;
+
+
 ——————————————————
 CREATE ROLE readwrite;
 GRANT CONNECT ON DATABASE chargeworks TO readwrite;
@@ -105,6 +115,16 @@ GRANT USAGE, CREATE ON SCHEMA cw_asset TO readwrite;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA cw_asset TO readwrite;
 ALTER DEFAULT PRIVILEGES IN SCHEMA cw_asset GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO readwrite;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA cw_asset TO readwrite;
+
+
+CREATE ROLE emobility_dev_admin WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  CREATEDB
+  CREATEROLE
+  NOREPLICATION
+
 
 
 
